@@ -1,0 +1,71 @@
+{
+  "name": "serverless-offline-ses",
+  "version": "0.0.7",
+  "description": "Serverless Framework Plugin to download and run a local aws ses service",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint './src/**/*.{js,ts,tsx}'",
+    "lint:fix": "eslint './src/**/*.{js,ts,tsx}' --fix",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YOU54F/serverless-offline-ses.git"
+  },
+  "keywords": [
+    "serverless",
+    "serverless-plugin",
+    "sls",
+    "sls-plugin",
+    "aws",
+    "ses",
+    "local",
+    "offline"
+  ],
+  "author": {
+    "name": "YOU54F"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YOU54F/serverless-offline-ses/issues"
+  },
+  "homepage": "https://github.com/YOU54F/serverless-offline-ses#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "npm run lint && npm test"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "12.1.1",
+    "@commitlint/config-conventional": "12.1.1",
+    "@types/jest": "26.0.23",
+    "@types/node": "14.14.44",
+    "@types/serverless": "1.78.26",
+    "@typescript-eslint/eslint-plugin": "4.22.1",
+    "@typescript-eslint/parser": "4.22.1",
+    "eslint": "7.25.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "3.4.0",
+    "husky": "6.0.0",
+    "jest": "26.6.3",
+    "nodemon": "2.0.7",
+    "prettier": "2.2.1",
+    "semantic-release": "17.4.2",
+    "ts-jest": "26.5.6",
+    "typescript": "4.2.4"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {
+    "aws-ses-local": "^1.0.6",
+    "serverless-ses-local": "^1.0.0"
+  }
+}

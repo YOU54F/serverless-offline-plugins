@@ -1,6 +1,6 @@
 {
-  "name": "serverless-offline-elasticmq",
-  "version": "0.0.11",
+  "name": "serverless-offline-elasticmq-localhost",
+  "version": "1.2.8",
   "description": "Serverless Framework Plugin to download and run ElasticMQ",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,12 +14,12 @@
     "start": "npm link && nodemon",
     "make_bin": "mkdir -p bin",
     "download": "curl -o bin/elasticmq-server-0.15.7.jar https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-0.15.7.jar",
-    "postinstall": "npm run make_bin && cd bin && npm run download",
+    "postinstall": "npm run make_bin",
     "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOU54F/serverless-offline-elasticmq.git"
+    "url": "git+https://github.com/C4n4rd0/serverless-offline-elasticmq-localhost.git"
   },
   "keywords": [
     "serverless",
@@ -35,13 +35,13 @@
     "sqs offline"
   ],
   "author": {
-    "name": "YOU54F"
+    "name": "C4n4rd0"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/YOU54F/serverless-offline-elasticmq/issues"
+    "url": "https://github.com/C4n4rd0/serverless-offline-elasticmq-localhost/issues"
   },
-  "homepage": "https://github.com/YOU54F/serverless-offline-elasticmq#readme",
+  "homepage": "https://github.com/C4n4rd0/serverless-offline-elasticmq-localhost#readme",
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint && npm test",

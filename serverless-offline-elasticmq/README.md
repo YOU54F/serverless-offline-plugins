@@ -1,32 +1,24 @@
-# serverless-offline-elasticmq
-
-![David](https://img.shields.io/david/YOU54F/serverless-offline-elasticmq.svg)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/YOU54F/serverless-offline-elasticmq.svg)
-![GitHub repo size](https://img.shields.io/github/repo-size/YOU54F/serverless-offline-elasticmq.svg)
-![npm](https://img.shields.io/npm/dw/serverless-offline-elasticmq.svg)
-![npm](https://img.shields.io/npm/dm/serverless-offline-elasticmq.svg)
-![npm](https://img.shields.io/npm/dy/serverless-offline-elasticmq.svg)
-![npm](https://img.shields.io/npm/dt/serverless-offline-elasticmq.svg)
-![NPM](https://img.shields.io/npm/l/serverless-offline-elasticmq.svg)
-![npm](https://img.shields.io/npm/v/serverless-offline-elasticmq.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/YOU54F/serverless-offline-elasticmq.svg)
-![npm collaborators](https://img.shields.io/npm/collaborators/serverless-offline-elasticmq.svg)
+# serverless-offline-elasticmq-localhost
 
 Serverless Framework Plugin to download and run an elasticMQ server to use with AWS SQS plugins
+
+Original code from YOU54F (https://github.com/YOU54F/serverless-offline-plugins/tree/main/serverless-offline-elasticmq)
+
+This repository allows to self define the version of elasticmq without requiring a new version of the package.
 
 ## Installation
 
 To install with npm, run this in your service directory:
 
 ```bash
-npm install --save-dev serverless-offline-elasticmq
+npm install --save-dev serverless-offline-elasticmq-localhost
 ```
 
 Then add this to your `serverless.yml`
 
 ```yml
 plugins:
-  - serverless-offline-elasticmq
+  - serverless-offline-elasticmq-localhost
 ```
 
 > Important:
@@ -46,6 +38,8 @@ To configure ElasticMQ Offline, add a `elasticmq` section like this to your
 ```yml
 custom:
   elasticmq:
+    # Set the version of ElasticMq you want to use
+    version: 1.5.4
     # If you only want to use elasticmq Offline in some stages, declare them here
     stages:
       - dev

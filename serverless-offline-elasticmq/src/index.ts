@@ -1,11 +1,12 @@
 import { ChildProcess, spawn } from "child_process";
 import { join } from "path";
 import Serverless from "serverless";
-import { promises as fs } from "fs";
+import { createWriteStream, existsSync, promises as fs } from "fs";
 import { ServerlessPluginCommand } from "../types/serverless-plugin-command";
 import { ElasticMQLaunchOptions, ElasticMQConfig } from "../types/elasticMQ";
 import internal from "stream";
 import { chunksToLinesAsync } from "@rauschma/stringio";
+import * as https from "https";
 
 const MQ_LOCAL_PATH = join(__dirname, "../bin");
 
@@ -27,7 +28,59 @@ class ServerlessOfflineElasticMqPlugin {
     };
   }
 
+  private getJarFileName = (elasticMqVersion: string) => {
+    return `elasticmq-server-${elasticMqVersion}.jar`;
+  };
+
+  private downloadElasticMqIfNecessary = async () => {
+    const elasticMqVersion = this.elasticMqConfig.version;
+
+    if (!elasticMqVersion) {
+      throw new Error("The property custom.elasticmq.version is mandatory.");
+    }
+
+    const elasticMqServerJarName = this.getJarFileName(elasticMqVersion);
+
+    if (this.isJarFilePresent(elasticMqServerJarName)) {
+      return;
+    }
+
+    const elasticMqVersionUrl = `https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-${elasticMqVersion}.jar`;
+
+    const filePath = `${MQ_LOCAL_PATH}/${elasticMqServerJarName}`;
+    const file = createWriteStream(filePath);
+
+    return new Promise<void>((resolve, reject) => {
+      https
+        .get(elasticMqVersionUrl, (response) => {
+          response.pipe(file);
+
+          file.on("finish", () => {
+            file.close();
+            this.serverless.cli.log(
+              `ElasticMq version ${elasticMqVersion} downloaded as ${elasticMqServerJarName}`,
+            );
+
+            resolve();
+          });
+        })
+        .on("error", (err: Error) => {
+          fs.unlink(filePath);
+          this.serverless.cli.log(
+            `Error downloading ElasticMq version ${elasticMqVersion}: ${err.message}`,
+          );
+          reject();
+        });
+    });
+  };
+
+  private isJarFilePresent = (elasticMqServerJarName: string) => {
+    return existsSync(elasticMqServerJarName);
+  };
+
   private spawnElasticMqProcess = async (options: ElasticMQLaunchOptions) => {
+    await this.downloadElasticMqIfNecessary();
+
     // We are trying to construct something like this:
     // java -jar bin/elasticmq-server-0.15.7.jar
 
@@ -71,11 +124,10 @@ aws {
 `;
     await fs.writeFile(`${MQ_LOCAL_PATH}/custom.conf`, confFile);
 
-    args.push(
-      "-jar",
-      "-Dconfig.file=custom.conf",
-      "elasticmq-server-0.15.7.jar",
-    );
+    const elasticMqVersion = this.elasticMqConfig.version;
+    const elasticMqServerJarName = this.getJarFileName(elasticMqVersion);
+
+    args.push("-jar", "-Dconfig.file=custom.conf", elasticMqServerJarName);
 
     const proc = spawn("java", args, {
       cwd: MQ_LOCAL_PATH,
@@ -124,7 +176,11 @@ aws {
     for await (const line of chunksToLinesAsync(readable)) {
       startupLog.push(line);
       this.serverless.cli.log(line);
-      if (line.includes("ElasticMQ server (0.15.7) started")) {
+      if (
+        line.includes(
+          `ElasticMQ server (${this.elasticMqConfig.version}) started`,
+        )
+      ) {
         return (started = true);
       }
     }

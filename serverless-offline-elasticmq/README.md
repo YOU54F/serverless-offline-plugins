@@ -14,21 +14,19 @@
 
 Serverless Framework Plugin to download and run an elasticMQ server to use with AWS SQS plugins
 
-This repository allows to self define the version of elasticmq without requiring a new version of the package.
-
 ## Installation
 
 To install with npm, run this in your service directory:
 
 ```bash
-npm install --save-dev serverless-offline-elasticmq-localhost
+npm install --save-dev serverless-offline-elasticmq
 ```
 
 Then add this to your `serverless.yml`
 
 ```yml
 plugins:
-  - serverless-offline-elasticmq-localhost
+  - serverless-offline-elasticmq
 ```
 
 > Important:

@@ -1,4 +1,16 @@
-# serverless-offline-elasticmq-localhost
+# serverless-offline-elasticmq
+
+![David](https://img.shields.io/david/YOU54F/serverless-offline-elasticmq.svg)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/YOU54F/serverless-offline-elasticmq.svg)
+![GitHub repo size](https://img.shields.io/github/repo-size/YOU54F/serverless-offline-elasticmq.svg)
+![npm](https://img.shields.io/npm/dw/serverless-offline-elasticmq.svg)
+![npm](https://img.shields.io/npm/dm/serverless-offline-elasticmq.svg)
+![npm](https://img.shields.io/npm/dy/serverless-offline-elasticmq.svg)
+![npm](https://img.shields.io/npm/dt/serverless-offline-elasticmq.svg)
+![NPM](https://img.shields.io/npm/l/serverless-offline-elasticmq.svg)
+![npm](https://img.shields.io/npm/v/serverless-offline-elasticmq.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/YOU54F/serverless-offline-elasticmq.svg)
+![npm collaborators](https://img.shields.io/npm/collaborators/serverless-offline-elasticmq.svg)
 
 Serverless Framework Plugin to download and run an elasticMQ server to use with AWS SQS plugins
 

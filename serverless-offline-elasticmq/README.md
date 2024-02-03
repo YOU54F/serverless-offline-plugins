@@ -14,8 +14,6 @@
 
 Serverless Framework Plugin to download and run an elasticMQ server to use with AWS SQS plugins
 
-Original code from YOU54F (https://github.com/YOU54F/serverless-offline-plugins/tree/main/serverless-offline-elasticmq)
-
 This repository allows to self define the version of elasticmq without requiring a new version of the package.
 
 ## Installation

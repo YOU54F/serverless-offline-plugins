@@ -46,7 +46,7 @@ To configure ElasticMQ Offline, add a `elasticmq` section like this to your
 ```yml
 custom:
   elasticmq:
-    # Set the version of ElasticMq you want to use
+    # Set the version of ElasticMq you want to use (optional)
     version: 1.5.4
     # If you only want to use elasticmq Offline in some stages, declare them here
     stages:

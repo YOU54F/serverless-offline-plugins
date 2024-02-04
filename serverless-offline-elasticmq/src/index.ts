@@ -33,12 +33,7 @@ class ServerlessOfflineElasticMqPlugin {
   };
 
   private downloadElasticMqIfNecessary = async () => {
-    const elasticMqVersion = this.elasticMqConfig.version;
-
-    if (!elasticMqVersion) {
-      throw new Error("The property custom.elasticmq.version is mandatory.");
-    }
-
+    const elasticMqVersion = this.elasticMqConfig.version || "1.5.7";
     const elasticMqServerJarName = this.getJarFileName(elasticMqVersion);
 
     if (this.isJarFilePresent(elasticMqServerJarName)) {

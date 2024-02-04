@@ -14,7 +14,7 @@ export interface ElasticMQLaunchOptions {
 
 
 export interface ElasticMQConfig {
-  version: string;
+  version?: string;
   stages?: string[];
   start: ElasticMQStartConfig;
 }

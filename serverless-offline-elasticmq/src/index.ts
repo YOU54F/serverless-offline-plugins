@@ -9,6 +9,7 @@ import { chunksToLinesAsync } from "@rauschma/stringio";
 import * as https from "https";
 
 const MQ_LOCAL_PATH = join(__dirname, "../bin");
+const ElasticMQLatestVersion = "1.5.7";
 
 class ServerlessOfflineElasticMqPlugin {
   public readonly commands: Record<string, ServerlessPluginCommand>;
@@ -33,7 +34,8 @@ class ServerlessOfflineElasticMqPlugin {
   };
 
   private downloadElasticMqIfNecessary = async () => {
-    const elasticMqVersion = this.elasticMqConfig.version || "1.5.7";
+    const elasticMqVersion =
+      this.elasticMqConfig.version || ElasticMQLatestVersion;
     const elasticMqServerJarName = this.getJarFileName(elasticMqVersion);
 
     if (this.isJarFilePresent(elasticMqServerJarName)) {
@@ -119,7 +121,8 @@ aws {
 `;
     await fs.writeFile(`${MQ_LOCAL_PATH}/custom.conf`, confFile);
 
-    const elasticMqVersion = this.elasticMqConfig.version;
+    const elasticMqVersion =
+      this.elasticMqConfig.version || ElasticMQLatestVersion;
     const elasticMqServerJarName = this.getJarFileName(elasticMqVersion);
 
     args.push("-jar", "-Dconfig.file=custom.conf", elasticMqServerJarName);
@@ -146,15 +149,17 @@ aws {
 
     this.mqInstances[port] = proc;
 
-    (([
-      "beforeExit",
-      "exit",
-      "SIGINT",
-      "SIGTERM",
-      "SIGUSR1",
-      "SIGUSR2",
-      "uncaughtException",
-    ] as unknown) as NodeJS.Signals[]).forEach((eventType) => {
+    (
+      [
+        "beforeExit",
+        "exit",
+        "SIGINT",
+        "SIGTERM",
+        "SIGUSR1",
+        "SIGUSR2",
+        "uncaughtException",
+      ] as unknown as NodeJS.Signals[]
+    ).forEach((eventType) => {
       process.on(eventType, () => {
         this.killElasticMqProcess(this.elasticMqConfig.start);
       });
